@@ -14,16 +14,16 @@ const searchBtn = document.getElementById('search-btn');
 const mainContainer = document.getElementById('main-container');
 // tab buttons variables
 const allTabBtn = document.getElementById('all-tab-btn');
-const OpenTabBtn = document.getElementById('open-tab-btn');
+const openTabBtn = document.getElementById('open-tab-btn');
 const closedTabBtn = document.getElementById('closed-tab-btn');
 
 // number card variables
 const totalIssues = document.getElementById('total-issues');
 
 // API variables
-allIssuesUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
-singleIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}';
-searchIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}';
+let allIssuesUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
+let singleIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}';
+let searchIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}';
 
 // default credentials
 const defaultUsername = 'admin';
@@ -44,7 +44,7 @@ function loginAuthentication() {
     const enteredUsrname = username.value.trim();
     const enteredPassword = password.value.trim();
     if(enteredPassword === defaultPassword && enteredUsrname === defaultUsername){
-        alert('Login successful!');
+        // alert('Login successful!');
         loginContainer.classList.add('hidden');
         navigationBar.classList.remove('hidden');
         mainContainer.classList.remove('hidden');
@@ -59,21 +59,51 @@ function loginAuthentication() {
 // change button color
 function changeButtonColor(activeBtn){
     allTabBtn.classList.remove('btn-primary');
-    OpenTabBtn.classList.remove('btn-primary');
+    openTabBtn.classList.remove('btn-primary');
     closedTabBtn.classList.remove('btn-primary');
 
     activeBtn.classList.add('btn-primary');
 }
 
-// allTabBtn.addEventListener('click', () => {
-//     currentTab = 'all';
-//     changeButtonColor(allTabBtn);
-//     // renderIssues(); // yet to implement
-// }
+allTabBtn.addEventListener('click', () => {
+    currentTab = 'all';
+    changeButtonColor(allTabBtn);
+    // renderIssues(); // yet to implement
+    fetchAllIssues();
+});
 
-// async function fetchAllIssues(){
-//     try {
-//         const response = await fetch(allIssuesUrl);
+openTabBtn.addEventListener('click', () =>{
+    currentTab = 'open';
+    changeButtonColor(openTabBtn);
+    // renderIssues(); // yet to implement
+})
 
-//     }
-// }
+closedTabBtn.addEventListener('click', () =>{
+    currentTab = 'closed';
+    changeButtonColor(closedTabBtn);
+    // renderIssues(); // yet to implement
+})
+
+
+async function fetchAllIssues(){
+    try {
+        const response = await fetch(allIssuesUrl);
+        if (!response.ok){
+            throw new Error("Error fetching data" + response.status);
+        }
+        const result = await response.json();
+        allIssues = result.data;
+        openIssues = allIssues.filter(issue => issue.status === 'open');
+        closedIssues = allIssues.filter(issue => issue.status === 'closed');
+        console.log(allIssues);
+    }
+    catch (error) {
+        console.error("Error fetching data: ", error);
+    }
+}
+
+function renderIssuesCards(currentTab){
+    if(currentTab === 'all'){
+        
+    }
+}

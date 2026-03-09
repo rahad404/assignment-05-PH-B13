@@ -267,7 +267,7 @@ function createIssueCard(issue) {
         <!-- status part -->
         <div class="flex justify-between items-center">
             <img class="issue-status h-[25px] w-[25px]" src="${statusImgSrc}" alt="status">
-            <div class="priority badge ${priority}">high</div>
+            <div class="priority badge ${priority}">${issue.priority}</div>
         </div>
 
         <!-- title and descriptio part -->
@@ -335,7 +335,7 @@ function renderCardModal(issue) {
     let author = issue.author;
     let assignee = issue.assignee;
     let createdAt = new Date(issue.createdAt).toLocaleString();
-    
+
     // label
     let divLabels = document.createElement('div');
     divLabels.classList.add('space-x-[2px]', 'space-y-[2px]', 'text-[8px]');
@@ -384,7 +384,7 @@ function renderCardModal(issue) {
         <h2 class="text-2xl font-bold text-slate-800">${title}</h2>
         
         <div class="flex items-center gap-2 mt-2">
-          <span class="badge badge-success text-white">${issue.status}</span>
+          <span class="badge badge-success font-bold">${issue.status}</span>
           <span class="text-sm text-slate-400">• Opened by ${author} • ${createdAt}</span>
         </div>
 
@@ -403,7 +403,7 @@ function renderCardModal(issue) {
           </div>
           <div class="text-right">
             <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Priority:</p>
-            <span class="badge ${priority} text-white font-bold p-3">${issue.priority}</span>
+            <span class="badge ${priority} font-bold p-3">${issue.priority}</span>
           </div>
         </div>
 

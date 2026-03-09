@@ -36,6 +36,7 @@ const defaultPassword = 'admin123';
 let allIssues = [];
 let openIssues = [];
 let closedIssues = [];
+let searchResults = [];
 let currentTab = 'all';
 let currentSearchText = '';
 
@@ -91,7 +92,7 @@ openTabBtn.addEventListener('click', () => {
     fetchAllIssues();
     updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
-})
+});
 
 closedTabBtn.addEventListener('click', () => {
     currentTab = 'closed';
@@ -99,8 +100,37 @@ closedTabBtn.addEventListener('click', () => {
     fetchAllIssues();
     updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
-})
+});
 
+searchBtn.addEventListener('click', () =>{
+    currentSearchText = search.value.trim();
+    if(currentSearchText === '') {
+        alert('Please enter a search term.');
+        return;
+    }
+    const searchUrl = searchIssueUrl.replace('{searchText}', encodeURIComponent(currentSearchText));
+    fetch(searchUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error fetching search results: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(result => {
+            searchResults = result.data;
+            if (searchResults.length === 0) {
+                alert('No issues found matching the search term.');
+                return;
+            }
+            // Display search results
+            cardContainer.innerHTML = '';
+            searchResults.forEach(issue => {
+                const card = createIssueCard(issue);
+                updateTotalIssues("search");
+                cardContainer.appendChild(card);
+            });
+        })
+})
 
 async function fetchAllIssues() {
     try {
@@ -152,6 +182,9 @@ function updateTotalIssues(currentTab) {
     }
     else if(currentTab === 'closed') {
         totalIssues.textContent = closedIssues.length;
+    }
+    else if(currentTab === 'search') {
+        totalIssues.textContent = searchResults.length;
     }
 }
 

@@ -65,11 +65,39 @@
         </div>
     </nav>
 
-    <section id="tab-btn-container" class="mt-20 mx-auto rounded-[5px] space-x-[10px] p-4 bg-[#ffffff] max-w-8/10">
-        <button id="all-tab-btn" class="btn  btn-primary w-[100px]">All</button>
-        <button id="open-tab-btn" class="btn w-[100px]">Open</button>
-        <button id="closed-tab-btn" class="btn w-[100px]">Closed</button>
-    </section>
+    <main class="mt-20 mx-auto max-w-8/10">
+        <section id="tab-btn-container" class="rounded-[5px] space-x-[10px] p-4 bg-[#ffffff]">
+            <button id="all-tab-btn" class="btn  btn-primary w-[100px]">All</button>
+            <button id="open-tab-btn" class="btn w-[100px]">Open</button>
+            <button id="closed-tab-btn" class="btn w-[100px]">Closed</button>
+        </section>
+
+        <div id="container" class="mt-4 rounded-[5px]">
+            <section id="number-card"
+                class="flex justify-center items-center gap-4 p-4 bg-[#ffffff] rounded-t-[5px] border-b-2 border-gray-300">
+                <img class="h-10" src="./assets/Aperture.png" alt="aparture logo">
+                
+                <div class="flex-1">
+                    <p class="text-xl font-bold"><span id="total-issue">00</span> Issues</p>
+                    <p class="text-gray-400">Track and manage your project issues</p>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium text-slate-700">
+                    <div class="flex items-center gap-2">
+                        <span class="h-3 w-3 rounded-full bg-[#10b981]"></span><span>Open</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="h-3 w-3 rounded-full bg-[#a855f7]"></span><span>Closed</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="card-container">
+                
+            </section>
+
+        </div>
+    </main>
 
 </body>
 

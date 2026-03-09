@@ -14,7 +14,8 @@
 </head>
 
 <body>
-    <div id="login-container" class="flex h-screen justify-center items-center">
+    <!-- login page -->
+    <div id="login-container" class="flex h-screen justify-center items-center hidden">
         <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
             <!-- <legend class="fieldset-legend">Login</legend> -->
 
@@ -25,12 +26,12 @@
             </div>
 
             <label class="label">Username</label>
-            <input type="text" class="input" placeholder="Enter User Name" />
+            <input type="text" id="user-name" class="input" placeholder="Enter User Name" />
 
             <label class="label">Password</label>
-            <input type="password" class="input" placeholder="Password" />
+            <input type="password" id="password" class="input" placeholder="Password" />
 
-            <button class="btn btn-primary mt-4">Sign In</button>
+            <button id="login-btn" class="btn btn-primary mt-4">Sign In</button>
 
             <div class="flex justify-center items-center gap-4 w-full mt-4">
                 <hr class="flex-grow border-gray-400">
@@ -42,10 +43,25 @@
                 <p><span class="font-bold">Username:</span> admin</p>
                 <p><span class="font-bold">Password:</span> admin123</p>
             </div>
-
         </fieldset>
     </div>
 
+    <!-- navigation bar with search -->
+    <nav>
+        <div class="navbar bg-base-100 shadow-sm fixed top-0 w-full z-50">
+            <div class="flex-1">
+                <a class="btn btn-ghost text-xl">
+                    <img class="h-10" src="./assets/github-logo.png" alt="github logo">
+                    <h3 class="text-2xl font-bold">GitHub Issues Tracker</h3>
+                </a>
+            </div>
+            <div class="flex gap-2">
+                <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </nav>
+    
 </body>
 
 </html>

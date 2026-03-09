@@ -18,7 +18,7 @@ const openTabBtn = document.getElementById('open-tab-btn');
 const closedTabBtn = document.getElementById('closed-tab-btn');
 
 // number card variables
-const totalIssues = document.getElementById('total-issues');
+const totalIssues = document.getElementById('total-issue');
 
 // card container variables
 const cardContainer = document.getElementById('card-container');
@@ -39,6 +39,7 @@ let closedIssues = [];
 let currentTab = 'all';
 let currentSearchText = '';
 
+fetchAllIssues();
 // event listeners
 loginButton.addEventListener('click', loginAuthentication);
 
@@ -51,13 +52,21 @@ function loginAuthentication() {
         loginContainer.classList.add('hidden');
         navigationBar.classList.remove('hidden');
         mainContainer.classList.remove('hidden');
-        // fetchAllIssues(); // yet to implement
+        fetchAllIssues();
+        updateTotalIssues(currentTab);
+        renderIssuesCards(currentTab);
     }
     else {
         loginErrorMsg.classList.remove('hidden');
         alert('Invalid username or password. Please try again.');
     }
 }
+
+        // fetchAllIssues().then(() => {
+            // updateTotalIssues(currentTab);
+            // renderIssuesCards(currentTab);
+        // });
+
 
 // change button color
 function changeButtonColor(activeBtn) {
@@ -72,6 +81,7 @@ allTabBtn.addEventListener('click', () => {
     currentTab = 'all';
     changeButtonColor(allTabBtn);
     fetchAllIssues();
+    updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
 });
 
@@ -79,6 +89,7 @@ openTabBtn.addEventListener('click', () => {
     currentTab = 'open';
     changeButtonColor(openTabBtn);
     fetchAllIssues();
+    updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
 })
 
@@ -86,6 +97,7 @@ closedTabBtn.addEventListener('click', () => {
     currentTab = 'closed';
     changeButtonColor(closedTabBtn);
     fetchAllIssues();
+    updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
 })
 
@@ -131,20 +143,16 @@ function renderIssuesCards(currentTab) {
     }   
 }
 
-let demoIssue = {
-    "id": 7,
-    "title": "Improve search functionality",
-    "description": "Add filters for advanced search including date ranges, status, and tags.",
-    "status": "open",
-    "labels": [
-        "enhancement",
-        "good first issue"
-    ],
-    "priority": "low",
-    "author": "search_guru",
-    "assignee": "emma_ui",
-    "createdAt": "2024-01-17T12:00:00Z",
-    "updatedAt": "2024-01-17T12:00:00Z"
+function updateTotalIssues(currentTab) {
+    if(currentTab === 'all'){
+        totalIssues.textContent = allIssues.length;
+    }
+    else if(currentTab === 'open') {
+        totalIssues.textContent = openIssues.length;
+    }
+    else if(currentTab === 'closed') {
+        totalIssues.textContent = closedIssues.length;
+    }
 }
 
 function createIssueCard(issue) {
@@ -171,7 +179,13 @@ function createIssueCard(issue) {
 
     // create the card 
     let div = document.createElement('div');
-    div.classList.add('card', 'border-t-4', 'border-green-500', 'bg-white', 'p-4', 'space-y-3', 'rounded-[5px]', 'shadow-md');
+    div.classList.add('card', 'bg-white', 'p-4', 'space-y-3', 'rounded-[5px]', 'shadow-md');
+    if(issue.status === 'open') {
+        div.classList.add( 'border-t-4', 'border-green-500', );
+    }
+    else if(issue.status === 'closed') {
+        div.classList.add( 'border-t-4', 'border-purple-500', );
+    }
 
     // label
     let divLabels = document.createElement('div');
@@ -212,7 +226,7 @@ function createIssueCard(issue) {
         `
     }
 
-
+    // create card inner HTML
     div.innerHTML = `
         <!-- status part -->
         <div class="flex justify-between items-center">

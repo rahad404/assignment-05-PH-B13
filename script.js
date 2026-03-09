@@ -317,11 +317,8 @@ cardContainer.addEventListener('click', (event) => {
     }
 })
 
-
-
+//------------------ modal render-------------------------
 function renderCardModal(issue) {
-    let cardId = issue.id;
-    let statusImgSrc = issue.status === 'open' ? './assets/Open-Status.png' : './assets/Closed- Status .png';
     let priority = '';
     if (issue.priority === 'low') {
         priority = 'badge-success';
@@ -338,8 +335,7 @@ function renderCardModal(issue) {
     let author = issue.author;
     let assignee = issue.assignee;
     let createdAt = new Date(issue.createdAt).toLocaleString();
-    let updatedAt = new Date(issue.updatedAt).toLocaleString();
-
+    
     // label
     let divLabels = document.createElement('div');
     divLabels.classList.add('space-x-[2px]', 'space-y-[2px]', 'text-[8px]');

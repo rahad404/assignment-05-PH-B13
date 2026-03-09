@@ -23,6 +23,9 @@ const totalIssues = document.getElementById('total-issue');
 // card container variables
 const cardContainer = document.getElementById('card-container');
 
+//modal variables
+const cardModal = document.getElementById('card-modal');
+
 // API variables
 let allIssuesUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
 let singleIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}';
@@ -44,7 +47,7 @@ fetchAllIssues();
 // event listeners
 loginButton.addEventListener('click', loginAuthentication);
 
-// login authentication function
+//------------ login authentication function--------------
 function loginAuthentication() {
     const enteredUsrname = username.value.trim();
     const enteredPassword = password.value.trim();
@@ -63,13 +66,7 @@ function loginAuthentication() {
     }
 }
 
-        // fetchAllIssues().then(() => {
-            // updateTotalIssues(currentTab);
-            // renderIssuesCards(currentTab);
-        // });
-
-
-// change button color
+//---------------change button color -------------
 function changeButtonColor(activeBtn) {
     allTabBtn.classList.remove('btn-primary');
     openTabBtn.classList.remove('btn-primary');
@@ -78,6 +75,7 @@ function changeButtonColor(activeBtn) {
     activeBtn.classList.add('btn-primary');
 }
 
+// ------------- button functionality -----------
 allTabBtn.addEventListener('click', () => {
     currentTab = 'all';
     changeButtonColor(allTabBtn);
@@ -105,7 +103,7 @@ closedTabBtn.addEventListener('click', () => {
 searchBtn.addEventListener('click', () =>{
     currentSearchText = search.value.trim();
     if(currentSearchText === '') {
-        alert('Please enter a search term.');
+        alert('Please enter a text to search');
         return;
     }
     const searchUrl = searchIssueUrl.replace('{searchText}', encodeURIComponent(currentSearchText));
@@ -132,6 +130,7 @@ searchBtn.addEventListener('click', () =>{
         })
 })
 
+// ------------- fetching data from api --------------
 async function fetchAllIssues() {
     try {
         const response = await fetch(allIssuesUrl);
@@ -149,6 +148,7 @@ async function fetchAllIssues() {
     }
 }
 
+// ------------- render cards---------------------
 function renderIssuesCards(currentTab) {
     if (currentTab === 'all') {
         cardContainer.innerHTML = '';
@@ -173,6 +173,7 @@ function renderIssuesCards(currentTab) {
     }   
 }
 
+// ------------- update total issue according to current tab ==---------
 function updateTotalIssues(currentTab) {
     if(currentTab === 'all'){
         totalIssues.textContent = allIssues.length;
@@ -188,6 +189,8 @@ function updateTotalIssues(currentTab) {
     }
 }
 
+
+//---------------------------------create card from issue---------------------
 function createIssueCard(issue) {
     // variable to put in to the card
     let cardId = issue.id;
@@ -292,4 +295,134 @@ function createIssueCard(issue) {
         </div>
     `
     return div;
+}
+
+cardContainer.addEventListener('click', (event) => {
+    const card = event.target.closest('.card');
+    if(card){
+        const issueId = card.querySelector('.card-id').textContent;
+        const issueUrl = singleIssueUrl.replace('{id}', issueId);
+        fetch(issueUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching issue details: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(result => {
+                const issue = result.data;
+                console.log(issue);
+                renderCardModal(issue);
+            })
+    }
+})
+
+
+
+function renderCardModal(issue) {
+    let cardId = issue.id;
+    let statusImgSrc = issue.status === 'open' ? './assets/Open-Status.png' : './assets/Closed- Status .png';
+    let priority = '';
+    if (issue.priority === 'low') {
+        priority = 'badge-success';
+    }
+    else if (issue.priority === 'medium') {
+        priority = 'badge-warning';
+    }
+    else if (issue.priority === 'high') {
+        priority = 'badge-error';
+    }
+    let title = issue.title;
+    let description = issue.description;
+    let labels = issue.labels;
+    let author = issue.author;
+    let assignee = issue.assignee;
+    let createdAt = new Date(issue.createdAt).toLocaleString();
+    let updatedAt = new Date(issue.updatedAt).toLocaleString();
+
+    // label
+    let divLabels = document.createElement('div');
+    divLabels.classList.add('space-x-[2px]', 'space-y-[2px]', 'text-[8px]');
+    if (labels.includes('bug')) {
+        divLabels.innerHTML += `
+        <div class="bug badge badge-soft badge-error text-[10px]">
+            <i class="fa-solid fa-bug"></i> bug
+        </div>
+        `
+    }
+    if (labels.includes('help wanted')) {
+        divLabels.innerHTML += `
+        <div class="help badge badge-soft badge-primary text-[10px]">
+            <i class="fa-solid fa-life-ring"></i> help wanted
+        </div>
+        `
+    }
+    if (labels.includes('enhancement')) {
+        divLabels.innerHTML += `
+        <div class="enhance badge badge-soft badge-success text-[10px]">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> enhancement
+        </div>
+        `
+    }
+    if (labels.includes('good first issue')) {
+        divLabels.innerHTML += `
+        <div class="good badge badge-soft badge-accent text-[10px]">
+            <i class="fa-solid fa-clover"></i> good first issue
+        </div>
+        `
+    }
+    if (labels.includes('documentation')) {
+        divLabels.innerHTML += `
+        <div class="info badge badge-soft badge-info text-[10px]">
+            <i class="fa-regular fa-file-lines"></i> documentation
+        </div>
+        `
+    }
+
+    let modalDiv = document.createElement('div');
+    modalDiv.classList.remove('hidden');
+    modalDiv.innerHTML =
+    `
+    <div class="modal modal-open" id="issue-modal">
+      <div class="modal-box max-w-xl rounded-[10px] shadow-2xl">
+        <h2 class="text-2xl font-bold text-slate-800">${title}</h2>
+        
+        <div class="flex items-center gap-2 mt-2">
+          <span class="badge badge-success text-white">${issue.status}</span>
+          <span class="text-sm text-slate-400">• Opened by ${author} • ${createdAt}</span>
+        </div>
+
+        <div class="flex mt-4">
+          ${divLabels.innerHTML}
+        </div>
+
+        <p class="py-6 text-slate-500 leading-relaxed">
+          ${description}
+        </p>
+
+        <div class="bg-slate-50 rounded-xl p-6 flex justify-between items-center">
+          <div>
+            <p class="text-xs text-slate-400 uppercase tracking-wider">Assignee:</p>
+            <p class="font-bold text-slate-700">${assignee || 'Unassigned'}</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Priority:</p>
+            <span class="badge ${priority} text-white font-bold p-3">${issue.priority}</span>
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <button class="btn btn-primary bg-indigo-600 border-none px-8" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  `;
+    document.body.appendChild(modalDiv);
+}
+
+function closeModal() {
+    const modal = document.getElementById('issue-modal');
+    if (modal) {
+        modal.remove();
+    }
 }

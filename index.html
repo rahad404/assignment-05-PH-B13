@@ -155,6 +155,69 @@
     </div>
   </main>
 
+  <!-- Modal Overlay -->
+  <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden"
+    id="modal">
+    <!-- Modal Content with DaisyUI card styling -->
+    <div class="modal-content max-w-2xl w-full bg-base-100 rounded-2xl shadow-2xl p-6 relative">
+
+      <!-- Title -->
+      <h2 class="modal-title text-2xl font-bold text-base-content mb-4" id="modal-title">Issue Title</h2>
+
+      <!-- Meta Information -->
+      <div class="modal-meta flex items-center gap-3 mb-4">
+        <!-- Status Badge with DaisyUI -->
+        <span class="status-badge badge badge-primary badge-lg" id="modal-status">open</span>
+        <span class="meta-text text-sm text-base-content/70" id="modal-meta">
+          • Opened by author • date
+        </span>
+      </div>
+
+      <!-- Labels/Tags Container -->
+      <div class="label-container flex flex-wrap gap-2 mb-4" id="modal-labels">
+        <!-- Labels will be inserted here -->
+      </div>
+
+      <!-- Description -->
+      <p class="modal-description text-base-content/80 mb-6 leading-relaxed" id="modal-description">Description</p>
+
+      <!-- Info Box -->
+      <div class="info-box grid grid-cols-2 gap-4 bg-base-200 rounded-xl p-4 mb-6">
+        <!-- Assignee -->
+        <div class="info-item">
+          <span class="info-label block text-sm font-medium text-base-content/60 mb-1">Assignee:</span>
+          <span class="info-value text-base-content font-semibold flex items-center gap-2">
+            <div class="avatar placeholder">
+              <div class="bg-neutral text-neutral-content rounded-full w-6">
+                <span id="modal-assignee-initials">?</span>
+              </div>
+            </div>
+            <span id="modal-assignee">Unassigned</span>
+          </span>
+        </div>
+
+        <!-- Priority -->
+        <div class="info-item">
+          <span class="info-label block text-sm font-medium text-base-content/60 mb-1">Priority:</span>
+          <span class="priority-badge badge badge-warning badge-lg" id="modal-priority">Medium</span>
+        </div>
+      </div>
+
+      <!-- Modal Actions -->
+      <div class="modal-actions flex justify-end gap-3">
+        <button class="close-btn btn btn-ghost" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="editIssue()">Edit Issue</button>
+      </div>
+
+      <!-- Close button (X) in top right -->
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4" onclick="closeModal()">✕</button>
+    </div>
+  </div>
+
+  <div id="card-modal" class="hidden">
+    
+  </div>
+
   <script src="./script.js"></script>
 </body>
 

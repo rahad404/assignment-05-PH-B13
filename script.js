@@ -25,20 +25,21 @@ allIssuesUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
 singleIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}';
 searchIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}';
 
-// global variables
+// default credentials
+const defaultUsername = 'admin';
+const defaultPassword = 'admin123';
+
+// variables
 let allIssues = [];
 let openIssues = [];
 let closedIssues = [];
 let currentTab = 'all';
 let currentSearchText = '';
 
-// default credentials
-const defaultUsername = 'admin';
-const defaultPassword = 'admin123';
-
 // event listeners
 loginButton.addEventListener('click', loginAuthentication);
 
+// login authentication function
 function loginAuthentication() {
     const enteredUsrname = username.value.trim();
     const enteredPassword = password.value.trim();
@@ -47,10 +48,32 @@ function loginAuthentication() {
         loginContainer.classList.add('hidden');
         navigationBar.classList.remove('hidden');
         mainContainer.classList.remove('hidden');
-        fetchAllIssues(); // yet to implement
+        // fetchAllIssues(); // yet to implement
     }
     else{
         loginErrorMsg.classList.remove('hidden');
         alert('Invalid username or password. Please try again.');
     }
 }
+
+// change button color
+function changeButtonColor(activeBtn){
+    allTabBtn.classList.remove('btn-primary');
+    OpenTabBtn.classList.remove('btn-primary');
+    closedTabBtn.classList.remove('btn-primary');
+
+    activeBtn.classList.add('btn-primary');
+}
+
+// allTabBtn.addEventListener('click', () => {
+//     currentTab = 'all';
+//     changeButtonColor(allTabBtn);
+//     // renderIssues(); // yet to implement
+// }
+
+// async function fetchAllIssues(){
+//     try {
+//         const response = await fetch(allIssuesUrl);
+
+//     }
+// }

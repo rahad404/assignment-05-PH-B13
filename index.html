@@ -102,17 +102,22 @@
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-[#eeeeee]">
 
         <!-- cards -->
-        <div class="card  bg-white p-4 space-y-3 rounded-[5px] shadow-md">
+        <div class="card border-t-4 border-green-500 bg-white p-4 space-y-3 rounded-[5px] shadow-md">
+          <!-- status part -->
           <div class="flex justify-between items-center">
             <img class="issue-status h-[25px] w-[25px]" src="./assets/Closed- Status .png" alt="status">
             <div class="priority badge badge-error">high</div>
           </div>
+
+          <!-- title and descriptio part -->
           <div>
             <h3 class="title text-xl font-bold">fix navigation</h3>
             <p class="description text-[12px] text-gray-500">Lorem ipsum dolor, sit amet consectetur
               adipisicing elit.
               Temporibus adipisci repellat sed labore excepturi pariat</p>
           </div>
+
+          <!-- label part -->
           <div class="space-x-[2px] space-y-[2px]">
             <div class="bug badge badge-soft badge-error ">
               <i class="fa-solid fa-bug"></i> bug
@@ -131,6 +136,7 @@
             </div>
             <hr class="my-3">
 
+            <!-- time author & assignee part -->
             <div class="flex justify-center items-center text-gray-400 text-[12px]">
               <div class="flex-1">
                 <p>#<span class="count">0</span> by <span class="author">john</span></p>

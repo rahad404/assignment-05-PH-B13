@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/github-alt-brands-solid.svg" type="image/x-icon">
+    <title>Github-Issue-Tracker</title>
+
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="login-container" class="flex h-screen justify-center items-center">
+        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <!-- <legend class="fieldset-legend">Login</legend> -->
+
+            <div class="flex flex-col justify-center items-center mb-[10px]">
+                <img class="mb-[20px]" src="./assets/github-logo.png" alt="github logo">
+                <h1 class="text-xl font-bold">GitHub Issues Tracker</h1>
+                <p class="text-gray-400">Sign in to manage your issues</p>
+            </div>
+
+            <label class="label">Username</label>
+            <input type="text" class="input" placeholder="Enter User Name" />
+
+            <label class="label">Password</label>
+            <input type="password" class="input" placeholder="Password" />
+
+            <button class="btn btn-primary mt-4">Sign In</button>
+
+            <div class="flex justify-center items-center gap-4 w-full mt-4">
+                <hr class="flex-grow border-gray-400">
+                <p class="text-gray-400">or</p>
+                <hr class="flex-grow border-gray-400">
+            </div>
+            <p class="text-center text-gray-400 mt-4">Demo Credentials:</p>
+            <div class="text-center py-[10PX] bg-gray-200 rounded-[5px]">
+                <p><span class="font-bold">Username:</span> admin</p>
+                <p><span class="font-bold">Password:</span> admin123</p>
+            </div>
+
+        </fieldset>
+    </div>
+
+</body>
+
+</html>

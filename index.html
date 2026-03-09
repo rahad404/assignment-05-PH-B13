@@ -56,12 +56,21 @@
                 </a>
             </div>
             <div class="flex gap-2">
-                <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-                <button class="btn btn-primary">Search</button>
+                <input id="search" type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+                <button id="srarch-btn" class="btn btn-primary">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Search
+                </button>
             </div>
         </div>
     </nav>
-    
+
+    <section id="tab-btn-container" class="mt-20 mx-auto rounded-[5px] space-x-[10px] p-4 bg-[#ffffff] max-w-8/10">
+        <button id="all-tab-btn" class="btn  btn-primary w-[100px]">All</button>
+        <button id="open-tab-btn" class="btn w-[100px]">Open</button>
+        <button id="closed-tab-btn" class="btn w-[100px]">Closed</button>
+    </section>
+
 </body>
 
 </html>

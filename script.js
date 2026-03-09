@@ -17,6 +17,8 @@ const allTabBtn = document.getElementById('all-tab-btn');
 const openTabBtn = document.getElementById('open-tab-btn');
 const closedTabBtn = document.getElementById('closed-tab-btn');
 
+const loading = document.getElementById('loading');
+
 // number card variables
 const totalIssues = document.getElementById('total-issue');
 
@@ -56,9 +58,13 @@ function loginAuthentication() {
         loginContainer.classList.add('hidden');
         navigationBar.classList.remove('hidden');
         mainContainer.classList.remove('hidden');
+        loading.classList.remove('hidden');
         fetchAllIssues();
         updateTotalIssues(currentTab);
         renderIssuesCards(currentTab);
+        setTimeout(() => {
+            loading.classList.add('hidden');
+        }, 500);
     }
     else {
         loginErrorMsg.classList.remove('hidden');
@@ -78,26 +84,38 @@ function changeButtonColor(activeBtn) {
 // ------------- button functionality -----------
 allTabBtn.addEventListener('click', () => {
     currentTab = 'all';
+    loading.classList.remove('hidden');
     changeButtonColor(allTabBtn);
     fetchAllIssues();
     updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
+    setTimeout(() => {
+        loading.classList.add('hidden');
+    }, 500);
 });
 
 openTabBtn.addEventListener('click', () => {
     currentTab = 'open';
+    loading.classList.remove('hidden');
     changeButtonColor(openTabBtn);
     fetchAllIssues();
     updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
+    setTimeout(() => {
+        loading.classList.add('hidden');
+    }, 500);
 });
 
 closedTabBtn.addEventListener('click', () => {
     currentTab = 'closed';
+    loading.classList.remove('hidden');
     changeButtonColor(closedTabBtn);
     fetchAllIssues();
     updateTotalIssues(currentTab);
     renderIssuesCards(currentTab);
+    setTimeout(() => {
+        loading.classList.add('hidden');
+    }, 500);
 });
 
 searchBtn.addEventListener('click', () =>{
@@ -106,6 +124,7 @@ searchBtn.addEventListener('click', () =>{
         alert('Please enter a text to search');
         return;
     }
+    loading.classList.remove('hidden');
     const searchUrl = searchIssueUrl.replace('{searchText}', encodeURIComponent(currentSearchText));
     fetch(searchUrl)
         .then(response => {
@@ -118,6 +137,7 @@ searchBtn.addEventListener('click', () =>{
             searchResults = result.data;
             if (searchResults.length === 0) {
                 alert('No issues found matching the search term.');
+                loading.classList.add('hidden');
                 return;
             }
             // Display search results
@@ -127,6 +147,9 @@ searchBtn.addEventListener('click', () =>{
                 updateTotalIssues("search");
                 cardContainer.appendChild(card);
             });
+            setTimeout(() => {
+                loading.classList.add('hidden');
+            }, 500);
         })
 })
 
@@ -150,22 +173,20 @@ async function fetchAllIssues() {
 
 // ------------- render cards---------------------
 function renderIssuesCards(currentTab) {
+    cardContainer.innerHTML = '';
     if (currentTab === 'all') {
-        cardContainer.innerHTML = '';
         allIssues.forEach(issue => {
             const card = createIssueCard(issue);
             cardContainer.appendChild(card);
         })
     }
     else if (currentTab === 'open') {
-        cardContainer.innerHTML = '';
         openIssues.forEach(issue => {
             const card = createIssueCard(issue);
             cardContainer.appendChild(card);
         })
     }
     else if (currentTab === 'closed') {
-        cardContainer.innerHTML = '';
         closedIssues.forEach(issue => {
             const card = createIssueCard(issue);
             cardContainer.appendChild(card);
